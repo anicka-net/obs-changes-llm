@@ -10,7 +10,8 @@ Takes messy upstream NEWS/changelog text on stdin, outputs properly formatted `.
 - Filters out Windows/macOS-specific items, CI/CD changes, build system internals, and contributor credits
 - Keeps bug fixes, features, performance improvements, translations, security fixes
 - Trims issue references to `#number` format
-- Generates the full `.changes` header (dashes + timestamp + email) with `--full`
+- Generates the full `.changes` header (dashes + timestamp + packager) with `--full`
+- Reads packager identity the same way `osc vc` does: `$mailaddr` env, `osc whois`, or git config
 - Runs entirely locally on CPU, ~15 seconds per changelog
 
 ## Setup

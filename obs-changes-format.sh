@@ -10,7 +10,7 @@
 # Environment:
 #   LLAMA_COMPLETION  path to llama-completion (default: llama-completion)
 #   LLAMA_MODEL       path to GGUF model (required)
-#   OBS_EMAIL         packager email (default: from osc or git config)
+#   mailaddr          packager identity (same as osc vc convention)
 
 set -euo pipefail
 
@@ -117,7 +117,15 @@ RESULT=$(echo "$RESULT" | \
     sed '/^- *$/d; /^> /d')
 
 if [ "$FULL_ENTRY" = true ]; then
-    EMAIL="${OBS_EMAIL:-$(osc who-am-i 2>/dev/null | grep -oP '(?<=Email: ).*' || git config user.email 2>/dev/null || echo 'packager@example.com')}"
+    # Packager identity: $mailaddr (osc convention) > osc whois > oscrc email > git
+    if [ -n "${mailaddr:-}" ]; then
+        EMAIL="$mailaddr"
+    elif command -v osc &>/dev/null; then
+        EMAIL=$(osc whois 2>/dev/null | sed 's/^[^:]*: //')
+    fi
+    if [ -z "${EMAIL:-}" ]; then
+        EMAIL=$(git config user.email 2>/dev/null || echo 'packager@example.com')
+    fi
     TIMESTAMP=$(LC_ALL=C date -u)
     DASHES="-------------------------------------------------------------------"
 

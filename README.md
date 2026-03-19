@@ -15,7 +15,15 @@ Takes messy upstream NEWS/changelog text on stdin, outputs properly formatted `.
 
 ## Setup
 
-### 1. Build llama.cpp
+### 1. Install llama.cpp
+
+On openSUSE:
+
+```bash
+sudo zypper install llama-cpp
+```
+
+Or build from source:
 
 ```bash
 git clone https://github.com/ggerganov/llama.cpp

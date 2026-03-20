@@ -21,7 +21,7 @@ Takes messy upstream NEWS/changelog text on stdin, outputs properly formatted `.
 On openSUSE:
 
 ```bash
-sudo zypper install llama-cpp
+sudo zypper install llamacpp
 ```
 
 Or build from source:
